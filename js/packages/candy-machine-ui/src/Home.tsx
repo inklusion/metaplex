@@ -424,14 +424,6 @@ const Home = (props: HomeProps) => {
               </MintContainer>
             </>
           )}
-          <Typography
-            variant="caption"
-            align="center"
-            display="block"
-            style={{ marginTop: 7, color: 'grey' }}
-          >
-            Powered by METAPLEX
-          </Typography>
         </Paper>
       </Container>
 
