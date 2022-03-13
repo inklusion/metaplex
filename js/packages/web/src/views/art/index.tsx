@@ -8,7 +8,7 @@ import {
   Button,
   Skeleton,
   List,
-  Card,
+  //Card,
 } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useArt, useExtendedArt } from '../../hooks';
@@ -238,13 +238,13 @@ export const ArtView = () => {
                 <br />
                 <div className="info-header">Attributes</div>
                 <List size="large" grid={{ column: 4 }}>
-                  {attributes.map(attribute => (
+                  {/*attributes.map(attribute => (
                     <List.Item key={attribute.trait_type}>
                       <Card title={attribute.trait_type}>
                         {attribute.value}
                       </Card>
                     </List.Item>
-                  ))}
+                  ))*/}
                 </List>
               </>
             )}
