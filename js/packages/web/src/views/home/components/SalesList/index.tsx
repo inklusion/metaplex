@@ -58,17 +58,13 @@ export const SalesListView = (props: { collectionMintFilter?: string }) => {
                 activeKey={activeKey}
                 onTabClick={key => setActiveKey(key as LiveAuctionViewState)}
               >
-                <TabPane
-                  tab={
-                    <>
-                      <span className="live"></span> Live
-                    </>
-                  }
-                  key={LiveAuctionViewState.All}
-                ></TabPane>
                 {hasResaleAuctions && (
                   <TabPane
-                    tab="Secondary Marketplace"
+                    tab={
+                      <>
+                        <span className="live"></span> Live
+                      </>
+                    }
                     key={LiveAuctionViewState.Resale}
                   ></TabPane>
                 )}
