@@ -79,12 +79,6 @@ export const SalesListView = (props: { collectionMintFilter?: string }) => {
                     key={LiveAuctionViewState.Participated}
                   ></TabPane>
                 )}
-                {connected && (
-                  <TabPane
-                    tab="My Live Auctions"
-                    key={LiveAuctionViewState.Own}
-                  ></TabPane>
-                )}
               </Tabs>
             </Row>
             <Row>
