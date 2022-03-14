@@ -37,7 +37,11 @@ import {
 } from '../../hooks';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { sendPlaceBid } from '../../actions/sendPlaceBid';
-import { AuctionCountdown, AuctionNumbers } from '../AuctionNumbers';
+import {
+  AuctionCountdown,
+  AuctionNumbers,
+  ManualAuctionCountdown,
+} from '../AuctionNumbers';
 import {
   sendRedeemBid,
   eligibleForParticipationPrizeGivenWinningIndex,
@@ -224,9 +228,10 @@ export const AuctionCard = ({
   const [value, setValue] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [whiteListed, setWhiteListed] = useState<boolean>(false);
+  const [whiteListed, setWhiteListed] = useState<boolean>(true);
   const [vipWhiteListed, setVipWhiteListed] = useState<boolean>(false);
   const [alreadyBought, setAlreadyBought] = useState<boolean>(false);
+  const [timeToWhitelist, setTimeToWhitelist] = useState<number>(2000);
 
   const whitelistState = async () => {
     setLoading(true);
@@ -234,9 +239,10 @@ export const AuctionCard = ({
     try {
       const whitelistState = await isWhitelisted(wallet.publicKey?.toString());
 
-      setWhiteListed(whitelistState == 2);
-      setVipWhiteListed(whitelistState == 3);
-      setAlreadyBought(whitelistState == 4);
+      setWhiteListed(whitelistState.state == 2);
+      setVipWhiteListed(whitelistState.state == 3);
+      setAlreadyBought(whitelistState.state == 4);
+      setTimeToWhitelist(whitelistState.time);
     } catch (e) {
       console.error('whitelistState', e);
       setLoading(false);
@@ -410,6 +416,25 @@ export const AuctionCard = ({
 
     return instantSale();
   };
+
+  function HandleWhitelisted() {
+    if (timeToWhitelist <= 0) {
+      return (
+        <Button
+          type="primary"
+          size="large"
+          className="ant-btn secondary-btn"
+          disabled={loading}
+          onClick={instantSaleAction}
+          style={{ marginTop: 20, width: '100%' }}
+        >
+          {actionButtonContent}
+        </Button>
+      );
+    } else {
+      return <ManualAuctionCountdown time={timeToWhitelist} />;
+    }
+  }
 
   const instantSale = async () => {
     setLoading(true);
@@ -840,19 +865,14 @@ export const AuctionCard = ({
               type="primary"
               size="large"
               className="ant-btn secondary-btn"
+              disabled={loading}
+              onClick={instantSaleAction}
               style={{ marginTop: 20, width: '100%' }}
             >
               {actionButtonContent}
             </Button>
           ) : wallet.connected && !vipWhiteListed && whiteListed ? ( // Whitelisted, not VIP
-            <Button
-              type="primary"
-              size="large"
-              className="ant-btn secondary-btn"
-              style={{ marginTop: 20, width: '100%' }}
-            >
-              Whitelisted
-            </Button>
+            <HandleWhitelisted />
           ) : wallet.connected && !vipWhiteListed && !whiteListed ? ( // Not whitelisted
             <Button
               type="primary"

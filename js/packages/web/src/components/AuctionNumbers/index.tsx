@@ -10,7 +10,10 @@ import {
 } from '@oyster/common';
 import { AuctionView, AuctionViewState, useBidsForAuction } from '../../hooks';
 import { AmountLabel } from '../AmountLabel';
-import { useAuctionCountdown } from '../../hooks/useAuctionCountdown';
+import {
+  useAuctionCountdown,
+  useManualCountdown,
+} from '../../hooks/useAuctionCountdown';
 import { useTokenList } from '../../contexts/tokenList';
 
 export const AuctionCountdown = (props: {
@@ -27,6 +30,16 @@ export const AuctionCountdown = (props: {
   return (
     <Col span={ended ? 24 : 10}>
       <LabeledCountdown state={state} />
+    </Col>
+  );
+};
+
+export const ManualAuctionCountdown = (props: { time: number }) => {
+  const state = useManualCountdown(props.time);
+
+  return (
+    <Col span={24}>
+      <ManualCountdown state={state} />
     </Col>
   );
 };
@@ -205,5 +218,53 @@ const LabeledCountdown = ({ state }: { state?: CountdownState }) => {
         </>
       </div>
     </>
+  );
+};
+
+const ManualCountdown = ({ state }: { state?: CountdownState }) => {
+  let localState = state;
+  if (!localState) {
+    localState = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+  }
+  return (
+    <Row
+      style={{ width: '100%', flexWrap: 'nowrap', paddingTop: '24px' }}
+      className={'no-label-cd'}
+    >
+      <Col>Whitelisted. Waiting for the sale to open in: </Col>
+      {localState.days > 0 && (
+        <Col>
+          <div className="cd-number">
+            {localState.days}
+            <span style={{ opacity: 0.5 }}>days</span>
+          </div>
+        </Col>
+      )}
+      <Col>
+        <div className="cd-number">
+          {localState.hours}
+          <span style={{ opacity: 0.5 }}>hours</span>
+        </div>
+      </Col>
+      <Col>
+        <div className="cd-number">
+          {localState.minutes}
+          <span style={{ opacity: 0.5 }}>min</span>
+        </div>
+      </Col>
+      {!localState.days && (
+        <Col>
+          <div className="cd-number">
+            {localState.seconds}
+            <span style={{ opacity: 0.5 }}>sec</span>
+          </div>
+        </Col>
+      )}
+    </Row>
   );
 };

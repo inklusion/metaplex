@@ -1,10 +1,11 @@
 interface WhitelistResult {
   state: number;
+  time: number;
 }
 
 export const isWhitelisted = async (
   walledAddress: string | undefined,
-): Promise<number> => {
+): Promise<WhitelistResult> => {
   const resp = await fetch(
     'https://api.zoker.com/api/marketplace/whitelisted',
     {
@@ -26,5 +27,5 @@ export const isWhitelisted = async (
 
   const result: WhitelistResult = await resp.json();
 
-  return result.state;
+  return result;
 };
