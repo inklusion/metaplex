@@ -25,18 +25,17 @@ export const useAuctionCountdown = (auctionView: AuctionView) => {
   return state;
 };
 
-export const useManualCountdown = (time: number) => {
+export const useManualCountdown = (t: number) => {
   const [state, setState] = useState<CountdownState>();
 
   useEffect(() => {
     const calc = () => {
-      if (time <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      if (t <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
-      const hours = Math.floor(time / 3600);
-      const days = Math.floor(hours / 24);
-      time %= 3600;
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.round(time % 60);
+      const days = Math.floor(t / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((t / 1000 / 60) % 60);
+      const seconds = Math.floor((t / 1000) % 60);
 
       const timeState: CountdownState = {
         days: days,
@@ -45,7 +44,7 @@ export const useManualCountdown = (time: number) => {
         seconds: seconds,
       };
 
-      time -= 1;
+      t -= 1;
 
       setState(timeState);
     };
@@ -56,7 +55,7 @@ export const useManualCountdown = (time: number) => {
 
     calc();
     return () => clearInterval(interval);
-  }, [time]);
+  }, [t]);
 
   return state;
 };
