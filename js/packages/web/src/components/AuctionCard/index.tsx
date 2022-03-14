@@ -64,7 +64,7 @@ import {
   WinningConfigType,
 } from '@oyster/common/dist/lib/models/metaplex/index';
 import { useActionButtonContent } from './hooks/useActionButtonContent';
-import { endSale } from './utils/endSale';
+//import { endSale } from './utils/endSale';
 import { useInstantSaleState } from './hooks/useInstantSaleState';
 import { useTokenList } from '../../contexts/tokenList';
 import CongratulationsModal from '../Modals/CongratulationsModal';
@@ -380,7 +380,7 @@ export const AuctionCard = ({
     setLoading(true);
 
     try {
-      await endSale({
+      /*await endSale({
         auctionView,
         connection,
         accountByMint,
@@ -388,7 +388,7 @@ export const AuctionCard = ({
         bidRedemptions,
         prizeTrackingTickets,
         wallet,
-      });
+      });*/
 
       // Save bought confirmation
       await confirmBuy(wallet.publicKey?.toString());
