@@ -11,7 +11,7 @@ export const isWhitelisted = async (
       method: 'POST',
       // @ts-ignore
       body: walledAddress,
-      mode: 'no-cors',
+      //mode: 'no-cors',
     },
   );
 
