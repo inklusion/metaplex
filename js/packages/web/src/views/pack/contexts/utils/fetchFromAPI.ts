@@ -5,14 +5,13 @@ interface WhitelistResult {
 export const isWhitelisted = async (
   walledAddress: string | undefined,
 ): Promise<number> => {
-  const request = { address: walledAddress };
-
   const resp = await fetch(
     'https://api.zoker.com/api/marketplace/whitelisted',
     {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       // @ts-ignore
-      body: request,
+      body: JSON.stringify({ address: walledAddress }),
       //mode: 'no-cors',
     },
   );
