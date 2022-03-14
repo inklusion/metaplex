@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, Carousel, Col, List, Row, Skeleton } from 'antd'; //Card
+import { Button, Carousel, Card, Col, List, Row, Skeleton } from 'antd'; //Card
 import { AuctionCard } from '../../components/AuctionCard';
 import { Connection } from '@solana/web3.js';
 import { AuctionViewItem } from '@oyster/common/dist/lib/models/metaplex/index';
@@ -222,11 +222,11 @@ export const AuctionView = () => {
           >
             <h6>Attributes</h6>
             <List grid={{ column: 4 }}>
-              {/*attributes.map((attribute, index) => (
+              {attributes.map((attribute, index) => (
                 <List.Item key={`${attribute.value}-${index}`}>
                   <Card title={attribute.trait_type}>{attribute.value}</Card>
                 </List.Item>
-              ))*/}
+              ))}
             </List>
           </Col>
         )}
@@ -300,11 +300,11 @@ export const AuctionView = () => {
             <div className={'about-nft-collection a-attributes'}>
               <h6>Attributes</h6>
               <List grid={{ column: 4 }}>
-                {/*attributes.map((attribute, index) => (
+                {attributes.map((attribute, index) => (
                   <List.Item key={`${attribute.value}-${index}`}>
                     <Card title={attribute.trait_type}>{attribute.value}</Card>
                   </List.Item>
-                ))*/}
+                ))}
               </List>
             </div>
           )}
