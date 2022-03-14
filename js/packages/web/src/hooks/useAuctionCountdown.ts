@@ -35,7 +35,7 @@ export const useManualCountdown = (time: number) => {
       const hours = Math.floor(time / 3600);
       time %= 3600;
       const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
+      const seconds = Math.round(time % 60);
 
       const timeState: CountdownState = {
         days: 0,
