@@ -12,7 +12,7 @@ export const isWhitelisted = async (
     {
       method: 'POST',
       // @ts-ignore
-      body: JSON.stringify(request),
+      body: request,
       //mode: 'no-cors',
     },
   );
