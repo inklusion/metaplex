@@ -68,7 +68,10 @@ import { endSale } from './utils/endSale';
 import { useInstantSaleState } from './hooks/useInstantSaleState';
 import { useTokenList } from '../../contexts/tokenList';
 import CongratulationsModal from '../Modals/CongratulationsModal';
-import { isWhitelisted } from '../../views/pack/contexts/utils/fetchFromAPI';
+import {
+  confirmBuy,
+  isWhitelisted,
+} from '../../views/pack/contexts/utils/fetchFromAPI';
 
 async function calculateTotalCostOfRedeemingOtherPeoplesBids(
   connection: Connection,
@@ -231,7 +234,7 @@ export const AuctionCard = ({
   const [whiteListed, setWhiteListed] = useState<boolean>(true);
   const [vipWhiteListed, setVipWhiteListed] = useState<boolean>(false);
   const [alreadyBought, setAlreadyBought] = useState<boolean>(false);
-  const [timeToWhitelist, setTimeToWhitelist] = useState<number>(2000);
+  const [timeToWhitelist, setTimeToWhitelist] = useState<number>(200000);
 
   const whitelistState = async () => {
     setLoading(true);
@@ -386,6 +389,9 @@ export const AuctionCard = ({
         prizeTrackingTickets,
         wallet,
       });
+
+      // Save bought confirmation
+      await confirmBuy(wallet.publicKey?.toString());
     } catch (e) {
       console.error('endAuction', e);
       setLoading(false);
