@@ -236,7 +236,9 @@ const ManualCountdown = ({ state }: { state?: CountdownState }) => {
       style={{ width: '100%', flexWrap: 'nowrap', paddingTop: '24px' }}
       className={'no-label-cd'}
     >
-      <Col>Whitelisted. Waiting for the sale to open in: </Col>
+      <Col>
+        <pre>Whitelisted. Waiting for the sale to open in: </pre>
+      </Col>
       {localState.days > 0 && (
         <Col>
           <div className="cd-number">
