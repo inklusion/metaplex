@@ -239,9 +239,9 @@ export const AuctionCard = ({
     try {
       const whitelistState = await isWhitelisted(wallet.publicKey?.toString());
 
-      setWhiteListed(whitelistState.state == 2);
-      setVipWhiteListed(whitelistState.state == 3);
-      setAlreadyBought(whitelistState.state == 4);
+      setWhiteListed(whitelistState.state == 1);
+      setVipWhiteListed(whitelistState.state == 2);
+      setAlreadyBought(whitelistState.state == 3);
       setTimeToWhitelist(whitelistState.time);
     } catch (e) {
       console.error('whitelistState', e);
