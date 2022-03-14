@@ -833,27 +833,25 @@ export const AuctionCard = ({
               disabled={true}
               style={{ marginTop: 20, width: '100%' }}
             >
-              Sorry, you already purchased one Zoker Origins NFT.
+              Sorry, you already purchased one Zoker Origins NFT
             </Button>
           ) : wallet.connected && vipWhiteListed ? ( // VIP Whitelisted
             <Button
               type="primary"
               size="large"
               className="ant-btn secondary-btn"
-              disabled={true}
               style={{ marginTop: 20, width: '100%' }}
             >
-              VIP whitelisted.
+              {actionButtonContent}
             </Button>
           ) : wallet.connected && !vipWhiteListed && whiteListed ? ( // Whitelisted, not VIP
             <Button
               type="primary"
               size="large"
               className="ant-btn secondary-btn"
-              disabled={true}
               style={{ marginTop: 20, width: '100%' }}
             >
-              Whitelisted.
+              Whitelisted
             </Button>
           ) : wallet.connected && !vipWhiteListed && !whiteListed ? ( // Not whitelisted
             <Button
@@ -863,7 +861,7 @@ export const AuctionCard = ({
               disabled={true}
               style={{ marginTop: 20, width: '100%' }}
             >
-              Sorry, not whitelisted.
+              Sorry, not whitelisted
             </Button>
           ) : (
             auctionView.isInstantSale &&
