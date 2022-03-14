@@ -64,6 +64,7 @@ import { endSale } from './utils/endSale';
 import { useInstantSaleState } from './hooks/useInstantSaleState';
 import { useTokenList } from '../../contexts/tokenList';
 import CongratulationsModal from '../Modals/CongratulationsModal';
+import { isWhitelisted } from '../../views/pack/contexts/utils/fetchFromAPI';
 
 async function calculateTotalCostOfRedeemingOtherPeoplesBids(
   connection: Connection,
@@ -192,6 +193,7 @@ function useAuctionExtended(
 
   return auctionExtended;
 }
+
 export const AuctionCard = ({
   auctionView,
   style,
@@ -221,6 +223,28 @@ export const AuctionCard = ({
 
   const [value, setValue] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [whiteListed, setWhiteListed] = useState<boolean>(false);
+  const [vipWhiteListed, setVipWhiteListed] = useState<boolean>(false);
+  const [alreadyBought, setAlreadyBought] = useState<boolean>(false);
+
+  const whitelistState = async () => {
+    setLoading(true);
+
+    try {
+      const whitelistState = await isWhitelisted(wallet.publicKey?.toString());
+
+      setWhiteListed(whitelistState == 2);
+      setVipWhiteListed(whitelistState == 3);
+      setAlreadyBought(whitelistState == 4);
+    } catch (e) {
+      console.error('whitelistState', e);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+  };
 
   const [showRedeemedBidModal, setShowRedeemedBidModal] =
     useState<boolean>(false);
@@ -336,6 +360,8 @@ export const AuctionCard = ({
   useEffect(() => {
     if (wallet.connected) {
       if (wallet.publicKey && !showPlaceBid) setShowPlaceBid(true);
+
+      if (wallet.publicKey) whitelistState();
     } else {
       if (showPlaceBid) setShowPlaceBid(false);
     }
@@ -799,6 +825,46 @@ export const AuctionCard = ({
             </Button>
           ) : loading ? (
             <Spin />
+          ) : wallet.connected && alreadyBought ? (
+            <Button
+              type="primary"
+              size="large"
+              className="ant-btn secondary-btn"
+              disabled={true}
+              style={{ marginTop: 20, width: '100%' }}
+            >
+              Sorry, you already purchased one Zoker Origins NFT.
+            </Button>
+          ) : wallet.connected && vipWhiteListed ? ( // VIP Whitelisted
+            <Button
+              type="primary"
+              size="large"
+              className="ant-btn secondary-btn"
+              disabled={true}
+              style={{ marginTop: 20, width: '100%' }}
+            >
+              VIP whitelisted.
+            </Button>
+          ) : wallet.connected && !vipWhiteListed && whiteListed ? ( // Whitelisted, not VIP
+            <Button
+              type="primary"
+              size="large"
+              className="ant-btn secondary-btn"
+              disabled={true}
+              style={{ marginTop: 20, width: '100%' }}
+            >
+              Whitelisted.
+            </Button>
+          ) : wallet.connected && !vipWhiteListed && !whiteListed ? ( // Not whitelisted
+            <Button
+              type="primary"
+              size="large"
+              className="ant-btn secondary-btn"
+              disabled={true}
+              style={{ marginTop: 20, width: '100%' }}
+            >
+              Sorry, not whitelisted.
+            </Button>
           ) : (
             auctionView.isInstantSale &&
             !isAlreadyBought && (
