@@ -33,7 +33,7 @@ export const useManualCountdown = (time: number) => {
       if (time <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
       const hours = Math.floor(time / 3600);
-      const days = hours / 24;
+      const days = Math.floor(hours / 24);
       time %= 3600;
       const minutes = Math.floor(time / 60);
       const seconds = Math.round(time % 60);

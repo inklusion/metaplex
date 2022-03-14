@@ -233,7 +233,7 @@ const ManualCountdown = ({ state }: { state?: CountdownState }) => {
   }
   return (
     <Row
-      style={{ width: '100%', flexWrap: 'nowrap', paddingTop: '24px' }}
+      style={{ width: '100%', flexWrap: 'nowrap', paddingTop: '16px' }}
       className={'no-label-cd'}
     >
       <Col>
