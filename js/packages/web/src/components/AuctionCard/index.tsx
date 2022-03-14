@@ -231,7 +231,7 @@ export const AuctionCard = ({
   const [value, setValue] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [whiteListed, setWhiteListed] = useState<boolean>(true);
+  const [whiteListed, setWhiteListed] = useState<boolean>(false);
   const [vipWhiteListed, setVipWhiteListed] = useState<boolean>(false);
   const [alreadyBought, setAlreadyBought] = useState<boolean>(false);
   const [timeToWhitelist, setTimeToWhitelist] = useState<number>(200000);
