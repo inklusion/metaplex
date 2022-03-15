@@ -40,7 +40,7 @@ import { sendPlaceBid } from '../../actions/sendPlaceBid';
 import {
   AuctionCountdown,
   AuctionNumbers,
-  ManualAuctionCountdown,
+  //ManualAuctionCountdown,
 } from '../AuctionNumbers';
 import {
   sendRedeemBid,
@@ -231,10 +231,10 @@ export const AuctionCard = ({
   const [value, setValue] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [whiteListed, setWhiteListed] = useState<boolean>(false);
-  const [vipWhiteListed, setVipWhiteListed] = useState<boolean>(false);
+  //const [whiteListed, setWhiteListed] = useState<boolean>(true);
+  //const [vipWhiteListed, setVipWhiteListed] = useState<boolean>(false);
   const [alreadyBought, setAlreadyBought] = useState<boolean>(false);
-  const [timeToWhitelist, setTimeToWhitelist] = useState<number>(200000);
+  //const [timeToWhitelist, setTimeToWhitelist] = useState<number>(20000000);
 
   const whitelistState = async () => {
     setLoading(true);
@@ -242,10 +242,10 @@ export const AuctionCard = ({
     try {
       const whitelistState = await isWhitelisted(wallet.publicKey?.toString());
 
-      setWhiteListed(whitelistState.state == 1);
-      setVipWhiteListed(whitelistState.state == 2);
+      //setWhiteListed(whitelistState.state == 1);
+      //setVipWhiteListed(whitelistState.state == 2);
       setAlreadyBought(whitelistState.state == 3);
-      setTimeToWhitelist(whitelistState.time);
+      //setTimeToWhitelist(whitelistState.time);
     } catch (e) {
       console.error('whitelistState', e);
       setLoading(false);
@@ -420,7 +420,7 @@ export const AuctionCard = ({
     return instantSale();
   };
 
-  function HandleWhitelisted() {
+  /*function HandleWhitelisted() {
     if (timeToWhitelist <= 0) {
       return (
         <Button
@@ -437,7 +437,7 @@ export const AuctionCard = ({
     } else {
       return <ManualAuctionCountdown time={timeToWhitelist} />;
     }
-  }
+  }*/
 
   const instantSale = async () => {
     setLoading(true);
@@ -866,29 +866,6 @@ export const AuctionCard = ({
               style={{ marginTop: 20, width: '100%' }}
             >
               Sorry, you already purchased one Zoker Origins NFT
-            </Button>
-          ) : wallet.connected && vipWhiteListed ? ( // VIP Whitelisted
-            <Button
-              type="primary"
-              size="large"
-              className="ant-btn secondary-btn"
-              disabled={loading}
-              onClick={instantSaleAction}
-              style={{ marginTop: 20, width: '100%' }}
-            >
-              {actionButtonContent}
-            </Button>
-          ) : wallet.connected && !vipWhiteListed && whiteListed ? ( // Whitelisted, not VIP
-            <HandleWhitelisted />
-          ) : wallet.connected && !vipWhiteListed && !whiteListed ? ( // Not whitelisted
-            <Button
-              type="primary"
-              size="large"
-              className="ant-btn secondary-btn"
-              disabled={true}
-              style={{ marginTop: 20, width: '100%' }}
-            >
-              Sorry, not whitelisted
             </Button>
           ) : (
             auctionView.isInstantSale &&
