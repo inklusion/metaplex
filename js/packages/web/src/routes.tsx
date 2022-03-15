@@ -13,7 +13,7 @@ import {
   HomeView,
   StaticPageView,
 } from './views';
-import { AdminView } from './views/admin';
+//import { AdminView } from './views/admin';
 import PackView from './views/pack';
 import { PackCreateView } from './views/packCreate';
 import { BillingView } from './views/auction/billing';
@@ -41,7 +41,7 @@ export function Routes() {
                 component={() => <PackView />}
               />
             )}
-            <Route exact path="/admin" component={() => <AdminView />} />
+
             <Route
               exact
               path="/analytics"
