@@ -26,7 +26,7 @@ export const SalesListView = (props: { collectionMintFilter?: string }) => {
   const [activeKey, setActiveKey] = useState(LiveAuctionViewState.Resale);
   const { isLoading } = useMeta();
   const { connected } = useWallet();
-  const { auctions, hasResaleAuctions } = useAuctionsList(activeKey);
+  const { auctions } = useAuctionsList(activeKey);
 
   const filteredAuctions = useMemo(() => {
     if (props.collectionMintFilter) {
@@ -58,17 +58,6 @@ export const SalesListView = (props: { collectionMintFilter?: string }) => {
                 activeKey={activeKey}
                 onTabClick={key => setActiveKey(key as LiveAuctionViewState)}
               >
-                {hasResaleAuctions && (
-                  <TabPane
-                    tab={
-                      <>
-                        <span className="live"></span> Live
-                      </>
-                    }
-                    key={LiveAuctionViewState.Resale}
-                  ></TabPane>
-                )}
-
                 {connected && (
                   <TabPane
                     tab="Participated"

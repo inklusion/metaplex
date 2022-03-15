@@ -25,7 +25,7 @@ export const ArtworksView = () => {
   } = useMeta();
   const { userAccounts } = useUserAccounts();
 
-  const [activeKey, setActiveKey] = useState(ArtworkViewState.Metaplex);
+  const [activeKey, setActiveKey] = useState(ArtworkViewState.Owned);
 
   const userItems = useItems({ activeKey });
 
@@ -90,12 +90,6 @@ export const ArtworksView = () => {
               onTabClick={key => setActiveKey(key as ArtworkViewState)}
               tabBarExtraContent={refreshButton}
             >
-              <TabPane
-                tab={<span className="tab-title">All</span>}
-                key={ArtworkViewState.Metaplex}
-              >
-                {artworkGrid}
-              </TabPane>
               {connected && (
                 <TabPane
                   tab={<span className="tab-title">Owned</span>}
