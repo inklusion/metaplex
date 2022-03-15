@@ -23,7 +23,7 @@ export enum LiveAuctionViewState {
 }
 
 export const SalesListView = (props: { collectionMintFilter?: string }) => {
-  const [activeKey, setActiveKey] = useState(LiveAuctionViewState.Resale);
+  const [activeKey, setActiveKey] = useState(LiveAuctionViewState.Participated);
   const { isLoading } = useMeta();
   const { connected } = useWallet();
   const { auctions } = useAuctionsList(activeKey);
