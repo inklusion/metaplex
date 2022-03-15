@@ -68,7 +68,7 @@ export const SalesListView = (props: { collectionMintFilter?: string }) => {
                     key={LiveAuctionViewState.Resale}
                   ></TabPane>
                 )}
-                <TabPane tab="Ended" key={LiveAuctionViewState.Ended}></TabPane>
+
                 {connected && (
                   <TabPane
                     tab="Participated"
